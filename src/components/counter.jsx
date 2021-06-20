@@ -4,26 +4,11 @@ class Counter extends Component {
   state = {
     count: 0
   };
-  // One way to access current 'counter' object is to bind event handler to 'this'
-  //   constructor() {
-  //     super();
-  //     this.handleIncrement = this.handleIncrement.bind(this);
-  //   }
 
-  // 'this' keyword is not accessible in regular javascript function
-  // 'this' in javascript behaves differently as compared to other languages
-  // obj.method() will return reference to current object
-  // function() will return 'window' object,
-  // but if strict mode is enabled then it will return 'undefined'
-  // handleIncrement() {
-  //   console.log("Increment Clicked");
-  //   // console.log(this.state.count); // This line will cause error: can not read property of undefined
-  // }
-
-  //   2nd way is to use arrow function
-  //   Arrow functions don't rebind 'this' keyword, they inherit interopDefault
+  // To updte 'state' we need to use one of method 'setState' inherited from base 'Component' of react
   handleIncrement = () => {
-    console.log("Increment Clicked", this);
+    // console.log("Increment Clicked", this);
+    this.setState({ count: this.state.count + 1 });
   };
 
   render() {
@@ -47,9 +32,8 @@ class Counter extends Component {
   }
 
   formatCount() {
-    // Using 'object destructring' to extract object properties
-    const { count, test } = this.state;
-    console.log(test);
+    // Using 'object destructring' to extract 'state' object properties
+    const { count } = this.state;
 
     return count === 0 ? "Zero" : count;
   }
