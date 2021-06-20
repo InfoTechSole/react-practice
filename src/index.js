@@ -1,7 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
+// eslint-disable-next-line
+import App from "./App"; // Added above line to avoid warning for 'unused-ref'
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.css";
 import Counter from "./components/counter";
