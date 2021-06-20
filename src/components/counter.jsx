@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 class Counter extends Component {
   state = {
-    count: 0
+    count: this.props.value
   };
 
   // To updte 'state' we need to use one of method 'setState' inherited from base 'Component' of react
@@ -20,6 +20,7 @@ class Counter extends Component {
   //   };
 
   render() {
+    console.log(this.props);
     return (
       <React.Fragment>
         <div>
