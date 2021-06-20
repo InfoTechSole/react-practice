@@ -6,34 +6,55 @@ class Movies extends Component {
     movies: getMovies()
   };
 
-  handleDelete = movie => {};
+  handleDelete = movie => {
+    let movies = this.state.movies.filter(m => m._id !== movie._id);
+    // Movie is removed but UI is not updating, figour out why??
+    console.log(movies);
+
+    this.setState(movies);
+  };
 
   render() {
+    let movies = this.state.movies;
     return (
       <React.Fragment>
+        <p className="row mt-2">
+          {/* There are no movies in the table. */}
+          Showing {movies.length} movies in the table.
+        </p>
         <table className="table">
           <thead>
-            <td>Sr. #</td>
-            <td>Title</td>
-            <td>Genre</td>
-            <td>Stock</td>
-            <td>Rate</td>
-            <td></td>
+            <tr>
+              <td>Sr. #</td>
+              <td>Title</td>
+              <td>Genre</td>
+              <td>Stock</td>
+              <td>Rate</td>
+              <td></td>
+            </tr>
           </thead>
-          <tbody>{this.renderTable()}</tbody>
+          <tbody>
+            {movies.map((movie, index) => (
+              <tr key={movie._id}>
+                <td>{index + 1}</td>
+                <td>{movie.title}</td>
+                <td>{movie.genre.name}</td>
+                <td>{movie.numberInStock}</td>
+                <td>{movie.dailyRentalRate}</td>
+                <td>
+                  <button
+                    className="btn btn-danger btn-sm"
+                    onClick={() => this.handleDelete(movie)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </React.Fragment>
     );
-  }
-
-  renderTable() {
-    console.log("in render table");
-
-    //   return (
-    //     {this.state.movies.map(movie => <tr>
-    //       <td></td>
-    //     </tr>)};
-    //   );
   }
 }
 
