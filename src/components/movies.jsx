@@ -9,18 +9,23 @@ class Movies extends Component {
   handleDelete = movie => {
     let movies = this.state.movies.filter(m => m._id !== movie._id);
     // Movie is removed but UI is not updating, figour out why??
-    console.log(movies);
+    // this.setState(movies); // logical problem, we need to pass object to 'setState'
 
-    this.setState(movies);
+    // this.setState({ movies: movies });
+    // In modern javascript if key and value are same then we can simplify code by removing repetition
+    this.setState({ movies });
   };
 
   render() {
-    let movies = this.state.movies;
+    let { movies } = this.state;
+    let { length: moviesCount } = this.state.movies;
+
     return (
       <React.Fragment>
         <p className="row mt-2">
-          {/* There are no movies in the table. */}
-          Showing {movies.length} movies in the table.
+          {moviesCount === 0
+            ? "There are no movies in the table."
+            : `Showing ${moviesCount} movies in the table.`}
         </p>
         <table className="table">
           <thead>
@@ -51,6 +56,7 @@ class Movies extends Component {
                 </td>
               </tr>
             ))}
+            {/* {moviesCount === 0 ? <tr> No record found.</tr> : <tr></tr>} */}
           </tbody>
         </table>
       </React.Fragment>
