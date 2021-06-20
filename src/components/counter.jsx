@@ -2,33 +2,41 @@ import React, { Component } from "react";
 
 class Counter extends Component {
   state = {
-    count: 0,
-    tags: ["tag1", "tag2", "tag3"]
+    count: 0
   };
 
-  renderTags() {
-    if (this.state.tags.length === 0) return <p> There are no tags. </p>;
-
-    return (
-      <ul>
-        {this.state.tags.map(tag => (
-          <li key={tag}>{tag}</li>
-        ))}
-      </ul>
-    );
+  handleIncrement() {
+    console.log("Increment Clicked");
+    // console.log(this.state.count); // This line will cause error: can not read property of undefined
+    // 'this' keyword is not accessible in regular javascript function
   }
 
   render() {
     return (
       <React.Fragment>
-        {/* In javascript we can apply logical AND operator between non-boolean values
-        In JS, when AND operator is used among multiple value then; if 1st value is true then it continues to evaluate, and it will return last value if all are true
-        For example: true && 'Hi' will return 'Hi'
-        true && 'Hi' && 1 will return 1  */}
-        {this.state.tags.length === 0 && "Please create a new tag."}
-        <ul>{this.renderTags()}</ul>
+        <span className={this.getBadgeClasses()}> {this.formatCount()} </span>
+        <button
+          onClick={this.handleIncrement}
+          className="btn btn-secondary btn-sm"
+        >
+          Increment
+        </button>
       </React.Fragment>
     );
+  }
+
+  getBadgeClasses() {
+    let classes = "badge m-2 badge-";
+    classes += this.state.count === 0 ? "warning" : "primary";
+    return classes;
+  }
+
+  formatCount() {
+    // Using 'object destructring' to extract object properties
+    const { count, test } = this.state;
+    console.log(test);
+
+    return count === 0 ? "Zero" : count;
   }
 }
 
