@@ -9,6 +9,9 @@ class Counter extends Component {
   handleIncrement = () => {
     // console.log("Increment Clicked", this);
     this.setState({ count: this.state.count + 1 });
+    // this.setState() is telling react that the value of this component is going to change.
+    // React then schedule a call to the 'render' method that sometime in the future,
+    // this method is going to be called, we don't know when
   };
 
   render() {
