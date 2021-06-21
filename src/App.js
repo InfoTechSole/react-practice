@@ -18,6 +18,7 @@ class App extends Component {
     // Now this function is not working after 'lifting state up' to app component, figour out why??
     // TODO: Figour out, how to pass arguments to 'handleIncrement' after lifting state up
     console.log(counter);
+    // Above issue fixed, pass arguments from 'counters' component, where we are raising events
     const counters = [...this.state.counters]; // Using spread operator '...' to clone the array of objects (ES6 feature)
     const index = counters.indexOf(counter);
     counters[index] = { ...counter }; // Spread operator to clone single object
@@ -30,6 +31,7 @@ class App extends Component {
     // Now this function is not working after 'lifting state up' to app component, figour out why??
     // TODO: Figour out, how to pass arguments to 'handleDelete' after lifting state up
     console.log(counterId);
+    // Above issue fixed, pass arguments from 'counters' component, where we are raising events
     let counters = this.state.counters.filter(c => c.id !== counterId);
     this.setState({ counters });
   };
@@ -56,9 +58,9 @@ class App extends Component {
           <Counters
             counters={this.state.counters}
             onReset={this.handleReset}
-            onIncrement={this.handleIncrement}
+            onIncrement={counter => this.handleIncrement(counter)}
             // Following way of passing arguments is not working
-            onDelete={counter => this.handleDelete(counter)}
+            onDelete={counterId => this.handleDelete(counterId)}
           />
         </main>
       </React.Fragment>

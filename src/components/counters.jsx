@@ -14,8 +14,8 @@ class Counters extends Component {
         {counters.map(counter => (
           <Counter
             // This component is not handling these events, instead its bubbling to its parent
-            onDelete={onDelete}
-            onIncrement={onIncrement}
+            onDelete={() => onDelete(counter.id)}
+            onIncrement={() => onIncrement(counter)}
             key={counter.id}
             counter={counter}
           />
