@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import { getMovies } from "../services/fakeMovieService";
 import Like from "./common/like";
+import Pagination from "./common/pagination";
 
 class Movies extends Component {
   state = {
-    movies: getMovies()
+    movies: getMovies(),
+    offset: 0,
+    limit: 4
   };
 
   handleDelete = movie => {
@@ -21,9 +24,34 @@ class Movies extends Component {
     this.setState({ movies: this.state.movies });
   };
 
+  gotoPage = pageNumber => {
+    let offset = pageNumber * this.state.limit;
+    this.setState({ offset });
+  };
+
   render() {
-    let { movies } = this.state;
-    let { length: moviesCount } = this.state.movies;
+    let { movies, offset, limit } = this.state;
+
+    let totalPages = movies.length / limit;
+    movies = movies.slice(offset, limit + offset);
+    let selectedPage = Math.floor(offset / limit) + 1;
+
+    let { length: moviesCount } = movies; // Object destructuring: assigning 'movies.length' to 'moviesCount' variable
+
+    var pages = [];
+    for (let index = 0; index < totalPages; index++) {
+      pages.push(
+        <li className="page-item" key={index}>
+          <a
+            href="#"
+            className="page-link"
+            onClick={() => this.gotoPage(index)}
+          >
+            {index + 1}
+          </a>
+        </li>
+      );
+    }
 
     return (
       <React.Fragment>
@@ -34,7 +62,7 @@ class Movies extends Component {
         </p>
         <table className="table">
           <thead>
-            <tr>
+            <tr style={{ fontWeight: "bold" }}>
               <td>Sr. #</td>
               <td>Title</td>
               <td>Genre</td>
@@ -71,6 +99,12 @@ class Movies extends Component {
             {/* {moviesCount === 0 ? <tr> No record found.</tr> : <tr></tr>} */}
           </tbody>
         </table>
+        {/* <Pagination records={this.state.movies} itemsPerPage={4} /> */}
+        <div className="row">
+          <nav aria-label="Page navigation example">
+            <ul className="pagination">{pages}</ul>
+          </nav>
+        </div>
       </React.Fragment>
     );
   }
