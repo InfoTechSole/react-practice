@@ -41,7 +41,12 @@ class Movies extends Component {
     var pages = [];
     for (let index = 0; index < totalPages; index++) {
       pages.push(
-        <li className="page-item" key={index}>
+        <li
+          className={
+            selectedPage === index + 1 ? "page-item active" : "page-item"
+          }
+          key={index}
+        >
           <a
             href="#"
             className="page-link"
@@ -100,11 +105,9 @@ class Movies extends Component {
           </tbody>
         </table>
         {/* <Pagination records={this.state.movies} itemsPerPage={4} /> */}
-        <div className="row">
-          <nav aria-label="Page navigation example">
-            <ul className="pagination">{pages}</ul>
-          </nav>
-        </div>
+        <nav aria-label="Page navigation example">
+          <ul className="pagination justify-content-center">{pages}</ul>
+        </nav>
       </React.Fragment>
     );
   }
