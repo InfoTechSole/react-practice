@@ -3,6 +3,18 @@ import NavBar from "./components/navbar";
 import Counters from "./components/counters";
 import "./App.css";
 
+// In 'MOUNT' lifecycle hook, we have 3 lifecycle hooks
+// e.g 'constructor', 'render' and 'componentDidMount'
+// React call these in order
+
+// In 'UPDATE' lifecycle hook, we have 2 lifecycle hooks
+// e.g 'render' and 'componentDidUpdate'
+
+// Last phase is 'UNMOUNT', in this phase, component will be removed from the DOM
+// e.g 'componentWillUnmount'
+
+// There are few more hooks but those are very rarely used
+
 class App extends Component {
   // Single source of truth, i.e each component has their own local state
   state = {
