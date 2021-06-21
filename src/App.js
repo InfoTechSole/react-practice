@@ -29,35 +29,23 @@ class App extends Component {
     ]
   };
 
-  constructor() {
-    super();
-    console.log("App - Constructor");
-    // this.state = this.props.something; // To access props, need to access as params e.g constructor(props)
-    // If need to use 'props' then pass in super e.g super(props), also receive it as params e.g constructor(props)
-  }
-
-  componentDidMount() {
-    console.log("App - Mounted");
-  }
-
   handleIncrement = counter => {
-    // Now this function is not working after 'lifting state up' to app component, figour out why??
-    // TODO: Figour out, how to pass arguments to 'handleIncrement' after lifting state up
-    console.log(counter);
-    // Above issue fixed, pass arguments from 'counters' component, where we are raising events
     const counters = [...this.state.counters]; // Using spread operator '...' to clone the array of objects (ES6 feature)
     const index = counters.indexOf(counter);
     counters[index] = { ...counter }; // Spread operator to clone single object
     counters[index].value++;
     this.setState({ counters });
-    console.log(this.state.counters[index]);
+  };
+
+  handleDecrement = counter => {
+    const counters = [...this.state.counters]; // Using spread operator '...' to clone the array of objects (ES6 feature)
+    const index = counters.indexOf(counter);
+    counters[index] = { ...counter }; // Spread operator to clone single object
+    counters[index].value--;
+    this.setState({ counters });
   };
 
   handleDelete = counterId => {
-    // Now this function is not working after 'lifting state up' to app component, figour out why??
-    // TODO: Figour out, how to pass arguments to 'handleDelete' after lifting state up
-    console.log(counterId);
-    // Above issue fixed, pass arguments from 'counters' component, where we are raising events
     let counters = this.state.counters.filter(c => c.id !== counterId);
     this.setState({ counters });
   };
@@ -84,7 +72,7 @@ class App extends Component {
             counters={this.state.counters}
             onReset={this.handleReset}
             onIncrement={counter => this.handleIncrement(counter)}
-            // Following way of passing arguments is not working
+            onDecrement={counter => this.handleDecrement(counter)}
             onDelete={counterId => this.handleDelete(counterId)}
           />
         </main>

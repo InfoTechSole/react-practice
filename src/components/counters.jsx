@@ -3,10 +3,8 @@ import Counter from "./counter";
 
 class Counters extends Component {
   render() {
-    console.log("Counters - Rendered");
-
     // Using 'Object Destructuring'
-    let { onReset, counters, onDelete, onIncrement } = this.props;
+    let { counters, onReset, onDelete, onIncrement, onDecrement } = this.props;
 
     return (
       <div>
@@ -18,6 +16,7 @@ class Counters extends Component {
             // This component is not handling these events, instead its bubbling to its parent
             onDelete={() => onDelete(counter.id)}
             onIncrement={() => onIncrement(counter)}
+            onDecrement={() => onDecrement(counter)}
             key={counter.id}
             counter={counter}
           />

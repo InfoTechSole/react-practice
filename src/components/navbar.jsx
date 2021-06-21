@@ -7,7 +7,6 @@ const NavBar = props => {
   // We can not use 'Lifecycle hooks' in stateless functional components
   // Because here we have single functional component that returns output of the component
 
-  console.log("Navbar - Rendered");
   return (
     <nav className="navbar navbar-light bg-light">
       <a href="" className="navbar-brand">

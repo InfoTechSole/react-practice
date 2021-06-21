@@ -4,19 +4,6 @@ class Counter extends Component {
   // A controlled component doesn't have its local state
   // Controlled component is handled by its parent
 
-  componentDidUpdate(prevProps, prevState) {
-    console.log("prevProps", prevProps);
-    console.log("prevState", prevState);
-
-    if (prevProps.counter.value !== this.props.counter.value) {
-      // Do something or may be Ajax call to get new data which is updated
-    }
-  }
-
-  componentWillUnmount() {
-    console.log("Counter - Unmount");
-  }
-
   render() {
     console.log("Counter - Rendered");
     return (
@@ -28,7 +15,14 @@ class Counter extends Component {
             onClick={this.props.onIncrement}
             className="btn btn-secondary btn-sm"
           >
-            Increment
+            +
+          </button>
+          <button
+            onClick={this.props.onDecrement}
+            className="btn btn-secondary btn-sm m-2"
+            disabled={this.props.counter.value === 0}
+          >
+            -
           </button>
           <button
             className="btn btn-danger btn-sm m-2"
