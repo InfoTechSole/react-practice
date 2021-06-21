@@ -3,11 +3,11 @@ import React, { Component } from "react";
 class Counter extends Component {
   // The component that OWNS a piece of the state, should be the one modifying it.
   state = {
-    count: this.props.value
+    value: this.props.counter.value
   };
 
   handleIncrement = () => {
-    this.setState({ count: this.state.count + 1 });
+    this.setState({ value: this.state.value + 1 });
   };
 
   render() {
@@ -15,6 +15,9 @@ class Counter extends Component {
       <React.Fragment>
         <div>
           <span className={this.getBadgeClasses()}> {this.formatCount()} </span>
+          <button className="btn btn-primary m-2 btn-sm" onClick={this.onClick}>
+            Reset
+          </button>
           <button
             onClick={() => this.handleIncrement()}
             className="btn btn-secondary btn-sm"
@@ -34,15 +37,15 @@ class Counter extends Component {
 
   getBadgeClasses() {
     let classes = "badge m-2 badge-";
-    classes += this.state.count === 0 ? "warning" : "primary";
+    classes += this.state.value === 0 ? "warning" : "primary";
     return classes;
   }
 
   formatCount() {
     // Using 'object destructring' to extract 'state' object properties
-    const { count } = this.state;
+    const { value } = this.state;
 
-    return count === 0 ? "Zero" : count;
+    return value === 0 ? "Zero" : value;
   }
 }
 

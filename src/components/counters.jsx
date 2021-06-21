@@ -2,11 +2,7 @@ import React, { Component } from "react";
 import Counter from "./counter";
 
 class Counters extends Component {
-  // Difference between props and state?
-  // Props includes data that we give to Components. PROPS ARE READONLY
-  // Whereas state includes data that is local or private to that component
-  // So other components can not access data directly from state
-
+  // Single source of truth, i.e each component has their own local state
   state = {
     counters: [
       { id: 1, value: 4 },
@@ -22,6 +18,8 @@ class Counters extends Component {
     this.setState({ counters });
   };
 
+  handleReset = () => {};
+
   render() {
     return (
       <div>
@@ -30,8 +28,7 @@ class Counters extends Component {
           <Counter
             onDelete={() => this.handleDelete(counter.id)}
             key={counter.id}
-            id={counter.id}
-            value={counter.value}
+            counter={counter}
           />
         ))}
       </div>
