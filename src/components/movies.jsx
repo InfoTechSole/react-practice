@@ -8,17 +8,30 @@ class Movies extends Component {
 
   handleDelete = movie => {
     let movies = this.state.movies.filter(m => m._id !== movie._id);
-    // Movie is removed but UI is not updating, figour out why??
-    // this.setState(movies); // logical problem, we need to pass object to 'setState'
-
-    // this.setState({ movies: movies });
-    // In modern javascript if key and value are same then we can simplify code by removing repetition
     this.setState({ movies });
+  };
+
+  toggleLike = movie => {
+    if (movie.like === undefined) {
+      movie.like = false;
+    }
+
+    movie.like = !movie.like;
+
+    console.log(movie);
+    this.setState({ movies: this.state.movies });
   };
 
   render() {
     let { movies } = this.state;
     let { length: moviesCount } = this.state.movies;
+
+    // let _movies = movies.filter(movie => {
+    //   movie.like = false;
+    //   return movie;
+    // });
+
+    // this.setState({ movies: _movies });
 
     return (
       <React.Fragment>
@@ -36,6 +49,7 @@ class Movies extends Component {
               <td>Stock</td>
               <td>Rate</td>
               <td></td>
+              <td></td>
             </tr>
           </thead>
           <tbody>
@@ -46,6 +60,13 @@ class Movies extends Component {
                 <td>{movie.genre.name}</td>
                 <td>{movie.numberInStock}</td>
                 <td>{movie.dailyRentalRate}</td>
+                <td>
+                  <i
+                    className={this.getLikeClasses(movie)}
+                    onClick={() => this.toggleLike(movie)}
+                    style={{ cursor: "pointer" }}
+                  ></i>
+                </td>
                 <td>
                   <button
                     className="btn btn-danger btn-sm"
@@ -62,6 +83,16 @@ class Movies extends Component {
       </React.Fragment>
     );
   }
+
+  getLikeClasses = movie => {
+    let classes = "fa fa-heart";
+
+    if (!movie.like) {
+      classes += "-o";
+    }
+
+    return classes;
+  };
 }
 
 export default Movies;
