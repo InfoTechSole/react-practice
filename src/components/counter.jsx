@@ -21,12 +21,22 @@ class Counter extends Component {
 
   render() {
     console.log(this.props);
+    // It will print following result:
+    // {value: 4, children: {…}}
+    // children:
+    // $$typeof: Symbol(react.element)
+    // key: null
+    // props: {children: " Title "}
+    // ref: null
+    // type: "h4"
+
     return (
       <React.Fragment>
         <div>
+          {this.props.children} {/* It will print 'Title' */}
           <span className={this.getBadgeClasses()}> {this.formatCount()} </span>
           <button
-            onClick={() => this.handleIncrement({ id: 1 })}
+            onClick={() => this.handleIncrement()}
             className="btn btn-secondary btn-sm"
           >
             Increment
