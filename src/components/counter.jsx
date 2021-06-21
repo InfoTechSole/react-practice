@@ -6,32 +6,14 @@ class Counter extends Component {
     count: this.props.value
   };
 
-  handleIncrement = product => {
+  handleIncrement = () => {
     this.setState({ count: this.state.count + 1 });
-    console.log(product);
   };
 
   render() {
-    console.log(this.props);
-    // It will print following result:
-    // {value: 4, children: {…}}
-    // children:
-    // $$typeof: Symbol(react.element)
-    // key: null
-    // props: {children: " Title "}
-    // ref: null
-    // type: "h4"
-
     return (
       <React.Fragment>
         <div>
-          {this.props.children}
-          {/* Now 'props.children' will print following: */}
-          {/* {id: 1, value: 4, onDelete: ƒ} */}
-          {/* {id: 2, value: 0, onDelete: ƒ} */}
-          {/* {id: 3, value: 0, onDelete: ƒ} */}
-          {/* {id: 4, value: 0, onDelete: ƒ} */}
-
           <span className={this.getBadgeClasses()}> {this.formatCount()} </span>
           <button
             onClick={() => this.handleIncrement()}
@@ -41,7 +23,7 @@ class Counter extends Component {
           </button>
           <button
             className="btn btn-danger btn-sm m-2"
-            onClick={this.props.onDelete}
+            onClick={() => this.props.onDelete()}
           >
             Delete
           </button>
