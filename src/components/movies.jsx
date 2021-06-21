@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { getMovies } from "../services/fakeMovieService";
+import Like from "./common/like";
 
 class Movies extends Component {
   state = {
@@ -11,27 +12,18 @@ class Movies extends Component {
     this.setState({ movies });
   };
 
-  toggleLike = movie => {
-    if (movie.like === undefined) {
-      movie.like = false;
+  handleLik = movie => {
+    if (movie.liked === undefined) {
+      movie.liked = false;
     }
 
-    movie.like = !movie.like;
-
-    console.log(movie);
+    movie.liked = !movie.liked;
     this.setState({ movies: this.state.movies });
   };
 
   render() {
     let { movies } = this.state;
     let { length: moviesCount } = this.state.movies;
-
-    // let _movies = movies.filter(movie => {
-    //   movie.like = false;
-    //   return movie;
-    // });
-
-    // this.setState({ movies: _movies });
 
     return (
       <React.Fragment>
@@ -61,11 +53,10 @@ class Movies extends Component {
                 <td>{movie.numberInStock}</td>
                 <td>{movie.dailyRentalRate}</td>
                 <td>
-                  <i
-                    className={this.getLikeClasses(movie)}
-                    onClick={() => this.toggleLike(movie)}
-                    style={{ cursor: "pointer" }}
-                  ></i>
+                  <Like
+                    onLikeToggle={() => this.handleLik(movie)}
+                    movie={movie}
+                  />
                 </td>
                 <td>
                   <button
@@ -83,16 +74,6 @@ class Movies extends Component {
       </React.Fragment>
     );
   }
-
-  getLikeClasses = movie => {
-    let classes = "fa fa-heart";
-
-    if (!movie.like) {
-      classes += "-o";
-    }
-
-    return classes;
-  };
 }
 
 export default Movies;
