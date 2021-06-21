@@ -5,6 +5,7 @@ class Counter extends Component {
   // Controlled component is handled by its parent
 
   render() {
+    console.log("Counter - Rendered");
     return (
       <React.Fragment>
         <div>

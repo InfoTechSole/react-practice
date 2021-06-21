@@ -15,6 +15,9 @@ import "./App.css";
 
 // There are few more hooks but those are very rarely used
 
+// => First of all, Constructor of App component will be called then 'App' component and 'all its children' are rendered recursively
+// => Finaly, our App is mounted and is in the DOM
+
 class App extends Component {
   // Single source of truth, i.e each component has their own local state
   state = {
@@ -25,6 +28,17 @@ class App extends Component {
       { id: 4, value: 0 }
     ]
   };
+
+  constructor() {
+    super();
+    console.log("App - Constructor");
+    // this.state = this.props.something; // To access props, need to access as params e.g constructor(props)
+    // If need to use 'props' then pass in super e.g super(props), also receive it as params e.g constructor(props)
+  }
+
+  componentDidMount() {
+    console.log("App - Mounted");
+  }
 
   handleIncrement = counter => {
     // Now this function is not working after 'lifting state up' to app component, figour out why??
@@ -57,8 +71,7 @@ class App extends Component {
   };
 
   render() {
-    console.log("this.props");
-    console.log(this.props);
+    console.log("App - Rendered");
 
     return (
       <React.Fragment>
