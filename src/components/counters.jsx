@@ -12,21 +12,42 @@ class Counters extends Component {
     ]
   };
 
+  handleIncrement = counter => {
+    const counters = [...this.state.counters]; // Using spread operator '...' to clone the array of objects (ES6 feature)
+    const index = counters.indexOf(counter);
+    counters[index] = { ...counter }; // Spread operator to clone single object
+    counters[index].value++;
+    this.setState({ counters });
+    console.log(this.state.counters[index]);
+  };
+
   handleDelete = counterId => {
-    console.log("Delete Clicked", counterId);
     let counters = this.state.counters.filter(c => c.id !== counterId);
     this.setState({ counters });
   };
 
-  handleReset = () => {};
+  handleReset = () => {
+    let counters = this.state.counters.map(m => {
+      m.value = 0;
+      return m;
+    });
+    this.setState({ counters });
+  };
 
   render() {
     return (
       <div>
+        <button
+          className="btn btn-primary m-2 btn-sm"
+          onClick={() => this.handleReset()}
+        >
+          Reset
+        </button>
         {this.state.counters.map(counter => (
-          // key, value and id are part of the props
           <Counter
             onDelete={() => this.handleDelete(counter.id)}
+            onIncrement={() => this.handleIncrement(counter)}
+            onReset={() => this.handleReset()}
             key={counter.id}
             counter={counter}
           />
