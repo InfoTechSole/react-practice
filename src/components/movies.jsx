@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import { getMovies } from "../services/fakeMovieService";
 import Like from "./common/like";
 import Pagination from "./common/pagination";
+import { paginate } from "../utils/paginate";
 
 class Movies extends Component {
   state = {
     movies: getMovies(),
-    offset: 0,
+    offset: 1,
     limit: 4
   };
 
@@ -24,39 +25,18 @@ class Movies extends Component {
     this.setState({ movies: this.state.movies });
   };
 
-  gotoPage = pageNumber => {
-    let offset = pageNumber * this.state.limit;
-    this.setState({ offset });
+  handlePageChange = page => {
+    this.setState({ offset: page });
+
+    console.log(page);
   };
 
   render() {
-    let { movies, offset, limit } = this.state;
+    let { length: moviesCount } = this.state.movies; // Object destructuring: assigning 'movies.length' to 'moviesCount' variable
+    let { offset, limit, movies: allMovies } = this.state;
 
-    let totalPages = movies.length / limit;
-    movies = movies.slice(offset, limit + offset);
-    let selectedPage = Math.floor(offset / limit) + 1;
-
-    let { length: moviesCount } = movies; // Object destructuring: assigning 'movies.length' to 'moviesCount' variable
-
-    var pages = [];
-    for (let index = 0; index < totalPages; index++) {
-      pages.push(
-        <li
-          className={
-            selectedPage === index + 1 ? "page-item active" : "page-item"
-          }
-          key={index}
-        >
-          <a
-            href="#"
-            className="page-link"
-            onClick={() => this.gotoPage(index)}
-          >
-            {index + 1}
-          </a>
-        </li>
-      );
-    }
+    // Get 'movies' for pagination
+    let movies = paginate(allMovies, offset, limit);
 
     return (
       <React.Fragment>
@@ -104,10 +84,15 @@ class Movies extends Component {
             {/* {moviesCount === 0 ? <tr> No record found.</tr> : <tr></tr>} */}
           </tbody>
         </table>
-        {/* <Pagination records={this.state.movies} itemsPerPage={4} /> */}
-        <nav aria-label="Page navigation example">
+        <Pagination
+          pageSize={limit}
+          currentPage={offset}
+          itemsCount={allMovies.length}
+          onPageChange={this.handlePageChange}
+        />
+        {/* <nav aria-label="Page navigation example">
           <ul className="pagination justify-content-center">{pages}</ul>
-        </nav>
+        </nav> */}
       </React.Fragment>
     );
   }

@@ -1,38 +1,27 @@
-import React, { Component } from "react";
+import React from "react";
+import _ from "lodash";
 
 const Pagination = props => {
-  let records = props.records;
-  let totalCount = records.length;
-  let itemsPerPage = props.itemsPerPage;
+  const { pageSize, currentPage, itemsCount, onPageChange } = props;
 
-  let totalPages = totalCount / itemsPerPage;
-  records.slice(0, itemsPerPage);
+  let pagesCount = Math.ceil(itemsCount / pageSize);
+  if (pagesCount === 1) return null; // Don't show pagination if there is only 1 page
 
-  var pages = [];
-  for (let index = 0; index < totalPages; index++) {
-    pages.push(
-      <li className="page-item">
-        <a href="#" className="page-link">
-          {index + 1}
-        </a>
-      </li>
-    );
-  }
+  let pages = _.range(1, pagesCount + 1); // lodash.range doesn't include last number, so add 1 to make sure last page count
 
   return (
     <nav aria-label="Page navigation example">
-      <ul class="pagination">
-        {/* <li class="page-item">
-              <a class="page-link" href="#">
-                Previous
-              </a>
-            </li> */}
-        {pages}
-        {/* <li class="page-item">
-              <a class="page-link" href="#">
-                Next
-              </a>
-            </li> */}
+      <ul className="pagination">
+        {pages.map(page => (
+          <li
+            key={page}
+            className={page === currentPage ? "page-item active" : "page-item"}
+          >
+            <a className="page-link" onClick={() => onPageChange(page)}>
+              {page}
+            </a>
+          </li>
+        ))}
       </ul>
     </nav>
   );
