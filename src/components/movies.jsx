@@ -41,7 +41,8 @@ class Movies extends Component {
 
         let movies = allMovies.filter(movie => movie.genre._id === genre._id);
 
-        this.setState({ movies });
+        // this.setState({ movies });
+        this.setState({ selectedGenre: genre });
     };
 
     handlePageChange = page => {
@@ -61,9 +62,8 @@ class Movies extends Component {
                     <div className="col-2">
                         <ListGroup
                             items={genres}
-                            textProperty="name"
-                            valueProperty="_id"
-                            onGenreSelect={this.handleGenreSelect}
+                            selectedItem={this.state.selectedGenre}
+                            onItemSelect={this.handleGenreSelect}
                         />
                     </div>
                     <div className="col">
