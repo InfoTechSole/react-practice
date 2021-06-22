@@ -15,7 +15,8 @@ class Movies extends Component {
     };
 
     componentDidMount() {
-        this.setState({ movies: getMovies(), genres: getGenres() });
+        let genres = [{ name: "All Genres" }, ...getGenres()];
+        this.setState({ movies: getMovies(), genres });
     }
 
     handleDelete = movie => {
@@ -37,12 +38,7 @@ class Movies extends Component {
             return null;
         }
 
-        let allMovies = [...this.state.movies];
-
-        let movies = allMovies.filter(movie => movie.genre._id === genre._id);
-
-        // this.setState({ movies });
-        this.setState({ selectedGenre: genre });
+        this.setState({ selectedGenre: genre, offset: 1 });
     };
 
     handlePageChange = page => {
@@ -50,11 +46,22 @@ class Movies extends Component {
     };
 
     render() {
-        let { length: moviesCount } = this.state.movies; // Object destructuring: assigning 'movies.length' to 'moviesCount' variable
-        let { offset, limit, movies: allMovies, genres } = this.state;
+        let {
+            offset,
+            limit,
+            movies: allMovies,
+            genres,
+            selectedGenre
+        } = this.state;
 
-        // Get 'movies' for pagination
-        let movies = paginate(allMovies, offset, limit);
+        // Get 'records' for pagination
+        let filtered =
+            selectedGenre && selectedGenre._id
+                ? allMovies.filter(
+                      movie => movie.genre._id === selectedGenre._id
+                  )
+                : allMovies;
+        let movies = paginate(filtered, offset, limit);
 
         return (
             <React.Fragment>
@@ -68,9 +75,9 @@ class Movies extends Component {
                     </div>
                     <div className="col">
                         <p className="row mt-2">
-                            {moviesCount === 0
+                            {filtered.length === 0
                                 ? "There are no movies in the table."
-                                : `Showing ${moviesCount} movies in the table.`}
+                                : `Showing ${filtered.length} movies in the table.`}
                         </p>
                         <table className="table">
                             <thead>
@@ -118,7 +125,7 @@ class Movies extends Component {
                         <Pagination
                             pageSize={limit}
                             currentPage={offset}
-                            itemsCount={allMovies.length}
+                            itemsCount={filtered.length}
                             onPageChange={this.handlePageChange}
                         />
                     </div>
